@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendamento | Barbearia VN</title>
+<style>
+:root {
+  --site-primary: #171717;
+  --site-on-primary: #ffffff;
+  --site-secondary: #c89b55;
+  --site-on-secondary: #171717;
+  --site-background: #f1eee8;
+  --site-on-background: #211f1b;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+#app { min-height: 100vh; width: 100%; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; }
+.hero { background: var(--site-primary); color: var(--site-on-primary); padding: calc(42px * var(--site-spacing-scale)) 22px calc(38px * var(--site-spacing-scale)); text-align: center; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; width: 230px; height: 230px; border: 1px solid var(--site-secondary); border-radius: 50%; opacity: calc(.18 * var(--site-decoration-opacity)); right: -90px; top: -120px; }
+.brand-mark { width: 66px; height: 66px; border: 2px solid var(--site-secondary); color: var(--site-secondary); display: grid; place-items: center; margin: 0 auto 15px; font-family: var(--site-font-heading); font-size: 30px; letter-spacing: -3px; }
+.eyebrow { color: var(--site-secondary); text-transform: uppercase; letter-spacing: 3px; font-size: 11px; font-weight: 800; }
+h1 { font-family: var(--site-font-heading); font-size: calc(38px * var(--site-heading-scale)); font-weight: 500; margin: 8px 0; }
+.hero p { color: #d4d0c9; margin: 0; font-size: 14px; }
+main { width: min(100% - 32px, 560px); margin: -18px auto 0; position: relative; padding-bottom: 38px; }
+.panel { background: light-dark(#fff, #242424); color: light-dark(#211f1b, #f4f0e8); border: 1px solid light-dark(#e4dfd6, #444); border-radius: calc(16px * var(--site-radius-scale)); padding: calc(24px * var(--site-spacing-scale)); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+h2 { font-family: var(--site-font-heading); font-size: calc(25px * var(--site-heading-scale)); font-weight: 500; margin: 0 0 18px; }
+.prices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+.price { border: 1px solid light-dark(#e5dfd4, #4a463f); border-radius: calc(12px * var(--site-radius-scale)); padding: 15px 13px; }
+.price strong { display: block; font-size: 13px; line-height: 1.4; min-height: 38px; }
+.amount { display: block; color: var(--site-secondary); font-size: 25px; font-weight: 800; margin-top: 8px; }
+form { display: grid; gap: 14px; }
+label { display: block; font-size: 12px; font-weight: 750; margin-bottom: 7px; }
+input, select { width: 100%; min-height: 48px; border: 1px solid light-dark(#d8d2c8, #555); border-radius: calc(9px * var(--site-radius-scale)); padding: 0 13px; background: light-dark(#fff, #171717); color: light-dark(#211f1b, #fff); font: inherit; font-size: 14px; }
+input:focus, select:focus { outline: 2px solid var(--site-secondary); outline-offset: 1px; }
+button { border: 0; border-radius: calc(10px * var(--site-radius-scale)); background: var(--site-secondary); color: var(--site-on-secondary); min-height: 52px; padding: 13px 18px; font: inherit; font-weight: 850; cursor: pointer; margin-top: 4px; }
+button:hover { filter: brightness(.96); }
+.note { font-size: 12px; color: light-dark(#6e685f, #c2bbb0); line-height: 1.55; text-align: center; margin: 14px 4px 0; }
+footer { text-align: center; color: light-dark(#716b61, #bbb3a7); font-size: 12px; padding: 0 18px 28px; }
+@media (max-width: 420px) { .prices { grid-template-columns: 1fr; } .price strong { min-height: 0; } h1 { font-size: calc(33px * var(--site-heading-scale)); } }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="hero">
+    <div class="brand-mark">VN</div>
+    <div class="eyebrow">Barbearia</div>
+    <h1>Agende seu horário</h1>
+    <p>Seu corte no capricho. Escolha o serviço e solicite seu horário.</p>
+  </header>
+  <main>
+    <section class="panel" aria-labelledby="booking-title">
+      <h2 id="booking-title">Serviços e valores</h2>
+      <div class="prices">
+        <div class="price"><strong>Corte normal</strong><span class="amount">R$ 25,00</span></div>
+        <div class="price"><strong>Corte + barba + sobrancelha</strong><span class="amount">R$ 35,00</span></div>
+      </div>
+      <h2>Marque seu horário</h2>
+      <form id="booking-form">
+        <div><label for="client">Seu nome</label><input id="client" name="client" autocomplete="name" placeholder="Digite seu nome" required></div>
+        <div><label for="service">Escolha o serviço</label><select id="service" name="service" required><option value="" disabled selected>Selecione uma opção</option><option value="Corte normal — R$ 25,00">Corte normal — R$ 25,00</option><option value="Corte + barba + sobrancelha — R$ 35,00">Corte + barba + sobrancelha — R$ 35,00</option></select></div>
+        <div><label for="date">Dia desejado</label><input id="date" name="date" type="date" required></div>
+        <div><label for="time">Horário desejado</label><select id="time" name="time" required><option value="" disabled selected>Selecione um horário</option></select></div>
+        <button type="submit">Solicitar agendamento pelo WhatsApp</button>
+      </form>
+      <p class="note">Seu pedido será enviado pelo WhatsApp. O horário só fica confirmado depois da resposta da barbearia.</p>
+    </section>
+  </main>
+  <footer>Barbearia VN · Atendimento com hora marcada</footer>
+</div>
+<script>
+const dateInput = document.getElementById('date');
+const today = new Date();
+const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+dateInput.min = localToday;
+const timeSelect = document.getElementById('time');
+for (let hour = 9; hour <= 20; hour++) {
+  for (const minute of [0, 30]) {
+    if (hour === 20 && minute === 30) continue;
+    const value = `${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}`;
+    const option = document.createElement('option'); option.value = value; option.textContent = value; timeSelect.appendChild(option);
+  }
+}
+document.getElementById('booking-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const name = document.getElementById('client').value.trim();
+  const service = document.getElementById('service').value;
+  const date = document.getElementById('date').value;
+  const time = document.getElementById('time').value;
+  if (!name || !service || !date || !time) return;
+  const [year, month, day] = date.split('-');
+  const message = `Olá! Quero solicitar um agendamento na Barbearia VN.\nNome: ${name}\nServiço: ${service}\nData: ${day}/${month}/${year}\nHorário desejado: ${time}\nAguardo a confirmação. Obrigado!`;
+  window.open(`https://wa.me/555984209038?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+});
+</script>
+</body>
+</html>
