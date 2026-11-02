@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agendamento | Barbearia VN</title>
+<style>
+:root {
+  --site-primary: #c89b45;
+  --site-secondary: #202020;
+  --site-background: #101010;
+  --site-on-primary: #17130b;
+  --site-on-secondary: #f5f1e8;
+  --site-on-background: #f5f1e8;
+  --site-font-body: Arial, Helvetica, sans-serif;
+  --site-font-heading: Georgia, 'Times New Roman', serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: #1b1b1b;
+  --surface-2: #242424;
+  --muted: #aaa49a;
+  --line: #38342d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--site-background);
+  color: var(--site-on-background);
+  font-family: var(--site-font-body);
+}
+#app {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--site-background);
+  color: var(--site-on-background);
+  border-radius: 0;
+}
+header {
+  border-bottom: 1px solid var(--line);
+  background: #151515;
+}
+.topbar {
+  max-width: 1050px;
+  margin: auto;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.mark {
+  width: 46px; height: 46px; border: 1px solid var(--site-primary);
+  color: var(--site-primary); display: grid; place-items: center;
+  font-family: var(--site-font-heading); font-size: 22px; font-weight: bold;
+  letter-spacing: -2px;
+}
+.brand-name { font-size: 13px; letter-spacing: 3px; font-weight: 700; }
+.brand-sub { color: var(--muted); font-size: 10px; letter-spacing: 2px; margin-top: 4px; }
+.tag { color: var(--site-primary); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+.hero {
+  max-width: 1050px; margin: auto; padding: 52px 22px 34px;
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: end;
+}
+.eyebrow { color: var(--site-primary); letter-spacing: 3px; font-size: 11px; text-transform: uppercase; }
+h1 {
+  font-family: var(--site-font-heading);
+  font-size: clamp(38px, 6vw, 64px);
+  line-height: 1.02; font-weight: 500; margin: 14px 0;
+  letter-spacing: -1.5px;
+}
+h1 span { color: var(--site-primary); font-style: italic; }
+.hero p { color: var(--muted); line-height: 1.7; max-width: 440px; font-size: 14px; }
+.hero-note {
+  border-left: 2px solid var(--site-primary); padding: 10px 0 10px 18px;
+  color: #d6d0c5; line-height: 1.6; font-size: 13px;
+}
+main { max-width: 1050px; margin: auto; padding: 10px 22px 56px; }
+.booking-layout { display: grid; grid-template-columns: 1fr 310px; gap: 22px; align-items: start; }
+.panel {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: calc(12px * var(--site-radius-scale)); padding: 24px;
+}
+.section-title { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; }
+.step {
+  width: 27px; height: 27px; display: grid; place-items: center;
+  background: var(--site-primary); color: var(--site-on-primary);
+  font-size: 12px; font-weight: bold; border-radius: 50%;
+}
+h2 { font-family: var(--site-font-heading); font-weight: 500; font-size: 23px; margin: 0; }
+.field-label { display: block; color: #d9d3c8; font-size: 12px; margin: 18px 0 9px; }
+.services { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.service {
+  width: 100%; text-align: left; padding: 15px; color: var(--site-on-background);
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 8px; cursor: pointer; font: inherit; min-height: 82px;
+}
+.service strong { display: block; font-size: 13px; margin-bottom: 8px; }
+.service span { color: var(--site-primary); font-weight: bold; font-size: 17px; }
+.service.selected { border-color: var(--site-primary); background: #30291e; }
+input, select {
+  width: 100%; min-height: 46px; background: #111; color: #f5f1e8;
+  border: 1px solid var(--line); border-radius: 7px; padding: 11px 12px;
+  font: inherit; outline: none;
+}
+input:focus, select:focus { border-color: var(--site-primary); }
+.times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.time {
+  border: 1px solid var(--line); color: #e8e2d7; background: #111;
+  padding: 11px 4px; border-radius: 7px; cursor: pointer; font-size: 12px;
+}
+.time.selected { color: var(--site-on-primary); background: var(--site-primary); border-color: var(--site-primary); font-weight: bold; }
+.time:disabled { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+.submit {
+  width: 100%; border: 0; background: var(--site-primary); color: var(--site-on-primary);
+  padding: 16px; border-radius: 7px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; cursor: pointer; margin-top: 22px;
+}
+.submit:hover { filter: brightness(1.08); }
+.summary { position: sticky; top: 15px; }
+.summary h2 { margin-bottom: 18px; }
+.summary-line { display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.summary-line span:first-child { color: var(--muted); }
+.summary-line strong { text-align: right; font-weight: 600; }
+.total { color: var(--site-primary); font-size: 23px; font-family: var(--site-font-heading); }
+.address { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 20px; }
+.notice { color: var(--muted); font-size: 11px; line-height: 1.6; margin-top: 16px; }
+.success {
+  display: none; margin-top: 18px; border: 1px solid #56744b; background: #1d2a1b;
+  border-radius: 8px; padding: 16px; color: #e5f2df; line-height: 1.6; font-size: 13px;
+}
+footer { border-top: 1px solid var(--line); color: var(--muted); text-align: center; padding: 24px; font-size: 11px; letter-spacing: 1px; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding-top: 38px; gap: 8px; }
+  .booking-layout { grid-template-columns: 1fr; }
+  .summary { position: static; }
+}
+@media (max-width: 420px) {
+  .panel { padding: 18px; }
+  .services { grid-template-columns: 1fr; }
+  .times { grid-template-columns: repeat(3, 1fr); }
+  .tag { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="mark">VN</div>
+        <div><div class="brand-name">BARBEARIA VN</div><div class="brand-sub">ESTILO EM CADA DETALHE</div></div>
+      </div>
+      <div class="tag">Agendamento online</div>
+    </div>
+  </header>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Seu próximo visual começa aqui</div>
+      <h1>Seu estilo.<br><span>Seu horário.</span></h1>
+      <p>Escolha o serviço, selecione o melhor horário e envie sua solicitação de agendamento.</p>
+    </div>
+    <div class="hero-note">Atendimento com hora marcada.<br>Escolha seus detalhes abaixo e confira seu resumo antes de enviar.</div>
+  </section>
+  <main>
+    <div class="booking-layout">
+      <section class="panel">
+        <div class="section-title"><div class="step">1</div><h2>Escolha seu serviço</h2></div>
+        <div class="services">
+          <button class="service selected" type="button" data-service="Corte" data-price="25">
+            <strong>Corte</strong><span>R$ 25,00</span>
+          </button>
+          <button class="service" type="button" data-service="Corte + barba e sobrancelha" data-price="40">
+            <strong>Corte + barba e sobrancelha</strong><span>R$ 40,00</span>
+          </button>
+        </div>
+        <div class="section-title" style="margin-top:28px"><div class="step">2</div><h2>Escolha data e horário</h2></div>
+        <label class="field-label" for="date">Data desejada</label>
+        <input id="date" type="date">
+        <label class="field-label">Horários disponíveis para solicitar</label>
+        <div class="times" id="times"></div>
+        <div class="section-title" style="margin-top:30px"><div class="step">3</div><h2>Seus dados</h2></div>
+        <label class="field-label" for="name">Seu nome</label>
+        <input id="name" type="text" placeholder="Digite seu nome" autocomplete="name">
+        <label class="field-label" for="phone">WhatsApp para contato</label>
+        <input id="phone" type="tel" placeholder="(00) 00000-0000" autocomplete="tel">
+        <button class="submit" id="confirm">Solicitar agendamento</button>
+        <div class="success" id="success" role="status"></div>
+      </section>
+      <aside class="panel summary">
+        <h2>Resumo do horário</h2>
+        <div class="summary-line"><span>Serviço</span><strong id="sum-service">Corte</strong></div>
+        <div class="summary-line"><span>Data</span><strong id="sum-date">Selecione uma data</strong></div>
+        <div class="summary-line"><span>Horário</span><strong id="sum-time">Selecione um horário</strong></div>
+        <div class="summary-line"><span>Nome</span><strong id="sum-name">—</strong></div>
+        <div class="summary-line"><span>Valor</span><strong class="total" id="sum-price">R$ 25,00</strong></div>
+        <div class="address"><strong style="color:#e9e2d6">BARBEARIA VN</strong><br>Rua Amapá, 674 — Ponta Porã<br>Cachoeirinha — RS</div>
+        <div class="notice">O envio desta solicitação não confirma automaticamente a reserva. Aguarde o barbeiro confirmar o horário.</div>
+      </aside>
+    </div>
+  </main>
+  <footer>BARBEARIA VN · SEU ESTILO EM BOAS MÃOS</footer>
+</div>
+<script>
+const services = [...document.querySelectorAll('.service')];
+const timeOptions = ['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00'];
+let service = 'Corte';
+let price = 25;
+let selectedTime = '';
+const dateInput = document.getElementById('date');
+const today = new Date();
+const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0,10);
+dateInput.min = localToday;
+function renderTimes() {
+  const wrap = document.getElementById('times');
+  wrap.innerHTML = '';
+  timeOptions.forEach(t => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'time' + (selectedTime === t ? ' selected' : '');
+    b.textContent = t;
+    b.addEventListener('click', () => { selectedTime = t; renderTimes(); updateSummary(); });
+    wrap.appendChild(b);
+  });
+}
+function updateSummary() {
+  document.getElementById('sum-service').textContent = service;
+  document.getElementById('sum-price').textContent = price.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+  document.getElementById('sum-date').textContent = dateInput.value ? new Date(dateInput.value+'T12:00:00').toLocaleDateString('pt-BR') : 'Selecione uma data';
+  document.getElementById('sum-time').textContent = selectedTime || 'Selecione um horário';
+  document.getElementById('sum-name').textContent = document.getElementById('name').value.trim() || '—';
+}
+services.forEach(button => button.addEventListener('click', () => {
+  services.forEach(s => s.classList.remove('selected'));
+  button.classList.add('selected');
+  service = button.dataset.service;
+  price = Number(button.dataset.price);
+  updateSummary();
+}));
+['date','name'].forEach(id => document.getElementById(id).addEventListener('input', updateSummary));
+renderTimes();
+updateSummary();
+document.getElementById('confirm').addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const date = dateInput.value;
+  const success = document.getElementById('success');
+  if (!name || !phone || !date || !selectedTime) {
+    success.style.display = 'block';
+    success.textContent = 'Preencha seu nome, WhatsApp, data e escolha um horário para continuar.';
+    return;
+  }
+  const dateText = new Date(date+'T12:00:00').toLocaleDateString('pt-BR');
+  success.style.display = 'block';
+  success.textContent = `Solicitação preparada! ${name}, você escolheu ${service} para ${dateText} às ${selectedTime}. Valor: ${price.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}. Entre em contato com a Barbearia VN para confirmar a reserva.`;
+});
+</script>
+</body>
+</html>
